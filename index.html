@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>JS Prom</title>
 </head>
-<script src="/script.js"></script>
+<script src="script.js"></script>
 <body>
     <div id="stack">
         <div id="pictures-slideshow" class="panel">
+            <!-- two background layers for smooth crossfade -->
+            <div class="slideshow-bg" aria-hidden="true"></div>
+            <div class="slideshow-bg" aria-hidden="true"></div>
             <div class="left">
                 <div id="title" class="container">
                     <p>Welcome to</p>
@@ -25,7 +28,7 @@
                 <p>Scroll for more---></p>
             </div>
         </div>
-        <div class="panel">
+        <div class="panel" id="main-screen">
             <div id="navbar">
                 <button data-target="event">EVENT</button>
                 <button data-target="venue">VENUE</button>  
@@ -33,8 +36,48 @@
                 <button data-target="contact">CONTACT</button>
             </div>
             <div id="content">
-                <div class="panel" id="event">Welcome to the Prom!
-                    <p></p>
+                <div class="panel" id="event">
+                    <h1>Welcome to the PSHS-BRC Batch 2027-2028 Promenade!</h1>
+                    <p>The Junior–Senior Promenade, titled <span>Rêveuse: The Night the Flowers Remembered</span>, will be
+                    held on February 20, 2026. It is an event organized by the Batch 2027 and Batch 2028 Councils,
+                    under the guidance of Mr. Joel R. Reginales, and with the support of the Grade 10 and Grade
+                    11 advisers.
+                    </p>
+                    <!-- <div id="meaning">
+                        <h1>Rêveuse<span>(reh-vuhz)</span></h1>
+                        <p>French</p>
+                    </div> -->
+                    <hr>
+                    <div>
+                        <div>
+                            <img src="images/Ethereal Girl Aesthetic.jpeg" alt="Ethereal Aesthetic">
+                            <h1><span>"</span>Whimsical / Ethereal / Gardencore</h1>
+                        </div>
+                        <div>
+                            <h1>Theme</h1>
+                            <p>Rêveuse seeks to blend elegance and
+                            creativity in an atmosphere that celebrates youth, growth, and unity. This Promenade also
+                            serves as a culminating social activity for scholars of Grades 10 and 11. It provides an avenue
+                            for students to demonstrate proper social etiquette in a formal setting while commemorating a
+                            meaningful milestone in their Pisay-Bikol journey.
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <h2>This event is complete with traditional features such as:</h2>
+                    <div id="features">
+                        <ul>
+                            <li>The Cotillion</li>
+                            <li>Bachelorette Dance</li>
+                            <li>Banquet</li>
+                            <li>Grand Ball</li>
+                            <li>Intermission numbers</li>
+                        </ul>
+                        <p id="text1">Around 180 students—comprising 90 scholars from Batch 2027 and 90 from Batch 2028—are
+                        expected to attend, alongside class advisers, subject teachers, and other faculty members who
+                        will serve as guests and chaperones.
+                        </p>
+                    </div>
                 </div>
                 <div class="panel" id="venue" style="display:none;">Event Details Here</div>
                 <div class="panel" id="gallery" style="display:none;">About the Theme</div>
