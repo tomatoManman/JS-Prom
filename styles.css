@@ -7,7 +7,7 @@
 
 @font-face {
     font-family: "Brillant";
-    src: url(fonts/brillant.otf);
+    src: url(/fonts/brillant.otf);
     font-weight: 100;
     font-style: normal;
 }
@@ -37,7 +37,7 @@
 }
 
 * {
-    font-family: "Poppins", snas-serif;
+    font-family: "Poppins", sans-serif;
     box-sizing: border-box;
     font-weight: light;
 }
