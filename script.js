@@ -1,4 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Slideshow: crossfade between two background layers every 5s
+    (function setupSlideshow(){
+        const slideshowEl = document.querySelector('#pictures-slideshow');
+        if (!slideshowEl) return;
+
+        const layers = Array.from(slideshowEl.querySelectorAll('.slideshow-bg'));
+        // If layers are not present, do nothing
+        if (layers.length < 2) return;
+
+        const images = [
+            'images/slide1.jpg',
+            'images/slide2.jpg',
+            'images/slide3.jpg',
+            'images/slide4.png',
+            'images/slide5.jpg',
+            'images/slide6.jpg',
+            'images/slide7.jpg',
+            'images/slide8.jpg',
+            'images/slide9.jpg',
+            'images/slide10.jpg',
+        ];
+
+        // Respect reduced-motion preference
+        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // initialize
+        let current = 0;
+        layers[0].style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("${images[0]}")`;
+        layers[0].classList.add('visible');
+        layers[1].style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("${images[1 % images.length]}")`;
+
+        if (prefersReduced) return; // don't animate
+
+        setInterval(() => {
+            const next = (current + 1) % images.length;
+            const visibleLayer = layers.find(l => l.classList.contains('visible'));
+            const hiddenLayer = layers.find(l => !l.classList.contains('visible'));
+
+            // put next image into hidden layer, then crossfade
+            hiddenLayer.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("${images[next]}")`;
+
+            // trigger crossfade
+            hiddenLayer.classList.add('visible');
+            visibleLayer.classList.remove('visible');
+
+            current = next;
+        }, 5000);
+    })();
+
     const openBtn = document.querySelector('#title button'); // the "Open Invitation" button
     const secondPanel = document.querySelector('#stack > .panel:nth-child(2)');
 
