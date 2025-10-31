@@ -1,0 +1,247 @@
+@font-face {
+    font-family: "Poppins";
+    src: url(/fonts/poppins.thin.ttf);
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Brillant";
+    src: url(fonts/brillant.otf);
+    font-weight: 100;
+    font-style: normal;
+}
+
+:root {
+    font-size: 16px;
+    --margin-xxs: .25rem;
+    --margin-xs: .5rem;
+    --margin-s: .75rem;
+    --margin-m: 1rem;
+    --margin-l: 1.75rem;
+    --margin-xl: 2.5rem;
+    --margin-xxl: 5rem;
+    --font-xxs: .5rem;
+    --font-xs: .75rem;
+    --font-s: 1rem;
+    --font-m: 1.25rem;
+    --font-l: 1.5rem;
+    --font-xl: 2.5rem;
+    --font-xxl: 4rem;
+    --nav-text-color: #261C1D;
+    --nav-clicked-text-color: #EFD9AC;
+    --nav-background-color:  #5C5F55;
+    --nav-border-color: #E5E1D8;
+    --background-color: #FFFAF0;
+    --text-color: #000000;
+}
+
+* {
+    font-family: "Poppins", snas-serif;
+    box-sizing: border-box;
+    font-weight: light;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    color: #FFFFFF;
+    text-align: left;
+    font-size: 16px;
+}
+
+#pictures-slideshow {
+    width: 100%;
+    height: 100vh;
+    background:
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), /* black layer */
+    url("images/slideshow1.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: -1;
+
+    & .scroll-down {
+        writing-mode: vertical-rl;
+        /* border: 2px solid white; */
+        position: relative;
+
+        & p{
+            margin: 0 5% 0 0;
+            padding: 0;
+            font-size: var(--font-s);
+            text-align: right;
+        }
+    }
+}
+
+.left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+    height: 60vh;
+    padding-left: var(--margin-xxl);
+    translate: 0 50%;
+}
+
+.left > .container {
+    padding: 0;
+
+    &:nth-child(2){
+
+        & p{
+            margin: var(--margin-xxs);
+            font-size: var(--font-m);
+            
+            &:nth-child(2){
+                font-size: var(--font-l);
+            }
+        }
+    }
+}
+
+#title {
+
+    & p {
+        font-size: var(--font-m);
+        margin:0;
+        padding: 0;
+        line-height: 1;
+        /* border: 1px solid white;  */
+
+        &:nth-child(2){
+            font-size: var(--font-xxl);
+            font-family: "Brillant";
+            line-height: 1.2;
+            margin-left: var(--margin-m);
+            margin-top: var(--margin-xl);
+        }
+        &:nth-child(3){
+            font: var(--font-l);
+            margin-left: var(--margin-m);
+        }
+    }
+}
+
+#stack {
+
+    & > .panel{
+        
+        &:nth-child(1){
+            /* translate: 50% 0; */
+
+            /* & button{
+                z-index: 10;
+                margin-top: var(--margin-xl);
+                font-size: var(--font-m);
+                background-color: transparent;
+                cursor: pointer;
+                border: 1px solid #FFFFFF;
+                border-radius: 2px;
+                color: #FFFFFF;
+            } */
+
+            & .left .container{
+
+                &:nth-child(2){
+
+                    & p:nth-child(1){
+                        color: var(--nav-border-color);
+                    }
+                }
+            }
+        }
+        
+        &:nth-child(2){
+            width: 100%;
+            /* stick this panel when it reaches halfway down the viewport */
+            position: -webkit-sticky; /* Safari */
+            position: sticky;
+            top: 50vh;
+            z-index: 1; /* make sure it sits above the hero overlay */
+            height: 100vh; 
+            background-color: var(--background-color);
+            overflow: auto;
+            padding: var(--margin-xxl) 14rem 0 14rem;
+
+            & p{
+                color: var(--text-color);
+            }
+
+            & #navbar{
+                /* border: 1px solid black; */
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                height: 7%;
+                
+
+                & button{
+                    border: none;
+                    border-bottom: 1px solid var(--nav-border-color);
+                    background-color: transparent;
+                    text-align: center;
+                    align-content: center;
+                    font-size: var(--font-s);
+                    color: var(--nav-text-color);
+                    cursor: pointer;
+                    border-radius: var(--font-xxs) var(--font-xxs) 0 0;
+
+                    &:hover{
+                        text-decoration: underline;
+                    }
+
+                    /* &:focus{
+                        color: var(--nav-clicked-text-color);
+                        background-color: var(--nav-background-color);
+                        text-decoration: underline;
+                    } */
+                    &.selected{
+                        color: var(--nav-clicked-text-color);
+                        background-color: var(--nav-background-color);
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#content {
+    /* border: 1px solid black; */
+    color: black;
+    font-size: var(--font-l);
+    padding-top: var(--margin-xl);
+}
+
+/* animation for content children when panel changes */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* animate navbar button background when selected */
+#navbar button {
+    transition: background-color 260ms cubic-bezier(.2,.9,.2,1),
+                color 260ms cubic-bezier(.2,.9,.2,1),
+                transform 260ms cubic-bezier(.2,.9,.2,1);
+}
+
+#navbar button.selected {
+    background-color: var(--nav-background-color);
+    color: var(--nav-clicked-text-color);
+    /* subtle pop + fade using the same keyframe */
+    animation: fadeUp 360ms cubic-bezier(.2,.9,.2,1) both;
+    transform: translateY(-4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #navbar button, #navbar button.selected {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+    }
+}
