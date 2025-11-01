@@ -2,7 +2,7 @@
 
 Really messy code of the 2k27-28 JS Prom
 
-Current Version: \n
+Current Version:
 Event Details - True
 Venue Details - False
 Attire Recommendations - False
