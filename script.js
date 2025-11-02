@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
         // Respect reduced-motion preference
-        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; //waht??? di ko gets sarili kong logic 1 day later
 
         // initialize
         let current = 0;
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             visibleLayer.classList.remove('visible');
 
             current = next;
-        }, 5000);
+        }, 7000);
     })();
 
     const openBtn = document.querySelector('#title button'); // the "Open Invitation" button
@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.scrollTo({ top: Math.round(targetY), behavior: 'smooth' });
         }
     });
+
     } else {
     // debug helper: log if selector failed
     if (!openBtn) console.warn('Open Invitation button not found using selector #title button');
