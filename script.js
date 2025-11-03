@@ -48,6 +48,123 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 7000);
     })();
 
+    // Villa Caceres slideshow (uses images in /images/villa caceres)
+    (function setupCaceresSlideshow(){
+        const container = document.querySelector('#caceres-slideshow');
+        if (!container) return;
+
+        const layers = Array.from(container.querySelectorAll('.caceres-bg'));
+        if (layers.length < 2) return;
+
+        const images = [
+            'images/villa caceres/slide1.jpeg',
+            'images/villa caceres/slide2.jpeg',
+            'images/villa caceres/slide3.jpeg',
+            'images/villa caceres/slide4.jpeg',
+            'images/villa caceres/slide5.jpeg',
+            'images/villa caceres/slide6.jpeg'
+        ];
+
+        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        let current = 0;
+        // initialize first two layers
+        layers[0].style.backgroundImage = `url("${images[0]}")`;
+        layers[0].classList.add('visible');
+        layers[1].style.backgroundImage = `url("${images[1 % images.length]}")`;
+
+        if (prefersReduced) return;
+
+        setInterval(() => {
+            const next = (current + 1) % images.length;
+            const visibleLayer = layers.find(l => l.classList.contains('visible'));
+            const hiddenLayer = layers.find(l => !l.classList.contains('visible'));
+
+            hiddenLayer.style.backgroundImage = `url("${images[next]}")`;
+            hiddenLayer.classList.add('visible');
+            visibleLayer.classList.remove('visible');
+
+            current = next;
+        }, 5000); // change every 5s as requested
+    })();
+
+    // Attire sliders: swipe right / click to advance images for boys and girls
+    (function setupAttireSliders(){
+        const sliders = Array.from(document.querySelectorAll('.attire-slider'));
+        if (!sliders.length) return;
+
+        // image lists
+        const imagesFor = {
+            boys: [
+                'images/attire/boys1.png',
+                'images/attire/boys2.png',
+                'images/attire/boys3.png',
+                'images/attire/boys4.png',
+                'images/attire/boys5.png',
+                'images/attire/boys6.png',
+                'images/attire/boys7.png',
+                'images/attire/boys8.png'
+            ],
+            girls: [
+                'images/attire/girls.png',
+                'images/attire/girls1.png',
+                'images/attire/girls2.png',
+                'images/attire/girls4.png',
+                'images/attire/girls5.jpg',
+                'images/attire/girls6.png',
+                'images/attire/girls7.png'
+            ]
+        };
+
+        sliders.forEach(slider => {
+            const gender = slider.dataset.gender || 'boys';
+            const imgs = imagesFor[gender] || imagesFor.boys;
+            let index = 0;
+            const imgEl = slider.querySelector('.attire-current');
+            const prevBtn = slider.querySelector('.attire-prev');
+            const nextBtn = slider.querySelector('.attire-next');
+
+            const setImage = (i) => {
+                index = (i + imgs.length) % imgs.length;
+                if (imgEl) imgEl.src = imgs[index];
+            };
+
+            // click handlers
+            if (nextBtn) nextBtn.addEventListener('click', (e)=>{ e.stopPropagation(); setImage(index+1); });
+            if (prevBtn) prevBtn.addEventListener('click', (e)=>{ e.stopPropagation(); setImage(index-1); });
+
+            // keyboard navigation when focused
+            slider.addEventListener('keydown', (e)=>{
+                if (e.key === 'ArrowRight') setImage(index+1);
+                if (e.key === 'ArrowLeft') setImage(index-1);
+            });
+
+            // touch swipe: user asked for swipe right to view images -> treat right swipe as NEXT
+            let touchStartX = null;
+            slider.addEventListener('touchstart', (e)=>{
+                if (e.touches && e.touches.length) touchStartX = e.touches[0].clientX;
+            }, {passive: true});
+            slider.addEventListener('touchend', (e)=>{
+                if (touchStartX === null) return;
+                const touchEndX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : null;
+                if (touchEndX === null) return;
+                const dx = touchEndX - touchStartX;
+                const THRESH = 40; // px
+                if (dx > THRESH) {
+                    // swipe right -> NEXT (per your request)
+                    setImage(index+1);
+                } else if (dx < -THRESH) {
+                    // swipe left -> PREV
+                    setImage(index-1);
+                }
+                touchStartX = null;
+            });
+
+            // init
+            setImage(0);
+        });
+    })();
+
     const openBtn = document.querySelector('#title button'); // the "Open Invitation" button
     const secondPanel = document.querySelector('#stack > .panel:nth-child(2)');
 
