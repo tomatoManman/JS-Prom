@@ -83,8 +83,25 @@
                 <div class="panel" id="venue" style="display:none;">
                     <h2><span>Villa Caceres Hotel</span> Magsaysay Avenue, Naga City</h2>
                     <div>
-                        <div id="caceres-slideshow">Caceres Slideshow</div>
-                        <div id="embedded-maps">Embedded Maps</div>
+                        <div id="caceres-slideshow">
+                            <!-- background layers for Villa Caceres slideshow -->
+                            <div class="caceres-bg" aria-hidden="true"></div>
+                            <div class="caceres-bg" aria-hidden="true"></div>
+                            <!-- optional caption/content can go here -->
+                        </div>
+                        <div id="embedded-maps">
+                            <!-- Embedded map showing Villa Caceres Hotel -->
+                            <iframe
+                                title="Villa Caceres Hotel location"
+                                src="https://www.google.com/maps?q=Villa+Caceres+Hotel+Magsaysay+Avenue+Naga+City&output=embed"
+                                width="100%"
+                                height="100%"
+                                style="border:0;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
                     </div>
 
                 </div>
@@ -92,11 +109,29 @@
                     <div>
                         <div id="boys">
                             <div class="head">Boys</div>
-                            <div class="text">Swipe right -> </div>
+                            <div class="text">
+                                <div class="attire-slider" data-gender="boys" tabindex="0" aria-label="Boys attire slideshow">
+                                    <img class="attire-current" src="images/attire/boys1.png" alt="Boys attire example">
+                                    <div class="attire-controls">
+                                        <button class="attire-prev" aria-label="Previous">‹</button>
+                                        <button class="attire-next" aria-label="Next">›</button>
+                                    </div>
+                                    <div class="attire-hint">Swipe right →</div>
+                                </div>
+                            </div>
                         </div>
                         <div id="girls">
                             <div class="head">Girls</div>
-                            <div class="text">Swipe right -> </div>
+                            <div class="text">
+                                <div class="attire-slider" data-gender="girls" tabindex="0" aria-label="Girls attire slideshow">
+                                    <img class="attire-current" src="images/attire/girls.png" alt="Girls attire example">
+                                    <div class="attire-controls">
+                                        <button class="attire-prev" aria-label="Previous">‹</button>
+                                        <button class="attire-next" aria-label="Next">›</button>
+                                    </div>
+                                    <div class="attire-hint">Swipe right →</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
