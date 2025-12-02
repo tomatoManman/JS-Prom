@@ -1,3 +1,4 @@
+/* ========== FONTS ========== */
 @font-face {
     font-family: "Poppins";
     src: url(/fonts/poppins.thin.ttf);
@@ -12,99 +13,409 @@
     font-style: normal;
 }
 
+/* ========== CSS VARIABLES ========== */
 :root {
-    font-size: 16px;
-    --margin-xxs: .25rem;
-    --margin-xs: .5rem;
-    --margin-s: .75rem;
-    --margin-m: 1rem;
-    --margin-l: 1.75rem;
-    --margin-xl: 2.5rem;
-    --margin-xxl: 5rem;
-    --font-xxs: .5rem;
-    --font-xs: .75rem;
-    --font-s: 1rem;
-    --font-m: 1.25rem;
-    --font-l: 1.5rem;
-    --font-xl: 2.5rem;
-    --font-xxl: 4rem;
+    /* Responsive typography using clamp */
+    font-size: clamp(14px, 2vw, 16px);
+    
+    /* Responsive spacing */
+    --margin-xxs: clamp(0.15rem, 1vw, 0.25rem);
+    --margin-xs: clamp(0.35rem, 1.5vw, 0.5rem);
+    --margin-s: clamp(0.5rem, 2vw, 0.75rem);
+    --margin-m: clamp(0.75rem, 2.5vw, 1rem);
+    --margin-l: clamp(1.25rem, 3vw, 1.75rem);
+    --margin-xl: clamp(1.75rem, 4vw, 2.5rem);
+    --margin-xxl: clamp(2.5rem, 6vw, 5rem);
+    
+    /* Responsive typography */
+    --font-xxs: clamp(0.4rem, 1vw, 0.5rem);
+    --font-xs: clamp(0.65rem, 1.5vw, 0.75rem);
+    --font-s: clamp(0.85rem, 2vw, 1rem);
+    --font-m: clamp(1rem, 2.5vw, 1.25rem);
+    --font-l: clamp(1.25rem, 3vw, 1.5rem);
+    --font-xl: clamp(1.75rem, 4vw, 2.5rem);
+    --font-xxl: clamp(2rem, 6vw, 4rem);
+    
+    /* Colors */
     --nav-text-color: #261C1D;
     --nav-clicked-text-color: #EFD9AC;
-    --nav-background-color:  #5C5F55;
+    --nav-background-color: #5C5F55;
     --nav-border-color: #E5E1D8;
     --background-color: #FFFAF0;
     --text-color: #000000;
 }
 
+/* ========== GLOBAL STYLES ========== */
 * {
-    font-family: "Poppins", snas-serif;
+    font-family: "Poppins", sans-serif;
     box-sizing: border-box;
-    font-weight: light;
+    font-weight: 300;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 html, body {
-    z-index: -2;
     margin: 0;
     padding: 0;
-    color: #FFFFFF;
-    text-align: left;
-    font-size: 16px;
     height: 100%;
     background-color: #000000;
-    overflow-x: hidden; /* prevent horizontal scrolling */
+    overflow-x: hidden;
 }
 
 body {
-    overflow-y: auto; /* only body shows the vertical scrollbar */
+    color: #FFFFFF;
+    text-align: left;
+    overflow-y: auto;
     position: relative;
 }
 
+/* ========== HERO SECTION ========== */
 #pictures-slideshow {
     width: 100%;
     height: 100vh;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
     display: flex;
     justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: -1;
-    overflow: hidden; /* contain absolute bg layers */
+    align-items: center;
 }
 
-/* background layers used for crossfade */
+/* Slideshow background layers - properly positioned */
 .slideshow-bg {
     position: absolute;
-    inset: 0; /* top:0; right:0; bottom:0; left:0 */
+    inset: 0;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    transition: opacity 1.6s ease-in-out; /* smooth fade */
+    transition: opacity 1.6s ease-in-out;
     opacity: 0;
-    z-index: -2; /* behind content inside slideshow */
+    z-index: 0;
 }
 
 .slideshow-bg.visible {
     opacity: 1;
 }
 
-.scroll-down {
-    writing-mode: vertical-rl;
+/* Hero content overlay - sits above background */
+.hero-content {
     position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
 }
 
-.scroll-down p{
-    margin: 0 5% 0 0;
+@media (max-width: 600px){
+    .hero-content {
+        display: black;
+    }
+}
+
+.left {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 6vw, 6rem);
+    height: auto;
+    padding: clamp(1rem, 5vw, var(--margin-xxl));
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 60vh;
+    pointer-events: auto;
+    z-index: 11;
+}
+
+@media (min-width: 768px) {
+    .left {
+        width: 50%;
+        min-height: auto;
+        align-items: flex-start;
+        text-align: left;
+    }
+}
+
+.container {
     padding: 0;
+}
+
+.container p {
+    margin: var(--margin-xs) 0;
+    font-size: var(--font-m);
+    line-height: 1.2;
+}
+
+#title p {
+    font-size: var(--font-m);
+    margin: 0;
+    padding: 0;
+}
+
+#title p:nth-child(2) {
+    font-size: clamp(2rem, 8vw, var(--font-xxl));
+    font-family: "Brillant";
+    line-height: 1.2;
+    margin: var(--margin-m) 0;
+}
+
+#title p:nth-child(3) {
+    font-size: var(--font-m);
+}
+
+/* Scroll indicator */
+.scroll-down {
+    writing-mode: vertical-rl;
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 12;
+    pointer-events: none;
+}
+
+.scroll-down p {
+    margin: 0;
+    padding: var(--margin-s);
     font-size: var(--font-s);
     text-align: right;
 }
 
-/* Villa Caceres slideshow background layers */
+@media (max-width: 480px) {
+    .scroll-down {
+        display: none;
+    }
+}
+
+/* ========== MAIN SCREEN (Content Section) ========== */
+#main-screen {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    background-color: var(--background-color);
+    overflow: visible;
+    padding: var(--margin-l) clamp(1rem, 5vw, 14rem) 0;
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+}
+
+/* ========== NAVBAR ========== */
+#navbar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 0;
+    width: 100%;
+    margin-bottom: var(--margin-xxs);
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+@media (max-width: 600px) {
+    #navbar {
+        margin-bottom: 0;
+    }
+}
+
+#navbar button,
+.nav-button {
+    border: none;
+    border-bottom: 2px solid var(--nav-border-color);
+    background-color: transparent;
+    text-align: center;
+    align-content: center;
+    font-size: clamp(0.65rem, 2vw, var(--font-s));
+    color: var(--nav-text-color);
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    line-height: 2.5;
+    padding: 0 var(--margin-s);
+    white-space: nowrap;
+    transition: background-color 260ms ease, color 260ms ease;
+}
+
+#navbar button:hover,
+.nav-button:hover {
+    text-decoration: underline;
+}
+
+#navbar button.selected,
+.nav-button.selected {
+    color: var(--nav-clicked-text-color);
+    background-color: var(--nav-background-color);
+    text-decoration: underline;
+    animation: fadeUp 360ms ease both;
+}
+
+/* ========== CONTENT CONTAINER ========== */
+#content {
+    color: var(--text-color);
+    font-size: var(--font-l);
+    padding-top: var(--margin-xs);
+    overflow: visible;
+    flex: 1;
+    width: 100%;
+}
+
+#content > .panel,
+#content > [data-panel] {
+    display: none;
+    width: 100%;
+}
+
+#content > .panel.active,
+#content > [data-panel].active {
+    display: block;
+    animation: fadeUp 360ms ease both;
+}
+
+/* Show first panel by default */
+#content > .panel:first-of-type,
+#content > [data-panel="event"] {
+    display: block;
+}
+
+/* ========== ARTICLE PANELS ========== */
+article.panel {
+    width: 100%;
+    display: contents;
+}
+
+/* ========== EVENT PANEL ========== */
+#event > div {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--margin-l);
+    margin-bottom: var(--margin-l);
+}
+
+.theme-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--margin-l);
+}
+
+@media (min-width: 768px) {
+    #event > div,
+    .theme-section {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+#event img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: var(--margin-s);
+    margin: 0 auto;
+}
+
+#event h1 {
+    font-size: var(--font-xl);
+    margin: var(--margin-m) 0;
+    padding: 0;
+}
+
+#event h1 span {
+    font-size: clamp(1.5rem, 4vw, var(--font-xxl));
+    font-family: "Brillant";
+    font-weight: 600;
+}
+
+#event p {
+    font-size: var(--font-s);
+    line-height: 1.6;
+    margin-bottom: var(--margin-m);
+}
+
+#event ul {
+    list-style: square;
+    padding: 0 var(--margin-m);
+    margin: var(--margin-l) 0;
+}
+
+#event li {
+    margin-bottom: var(--margin-s);
+    font-size: var(--font-m);
+}
+
+#event h2 {
+    font-size: var(--font-m);
+    margin-top: var(--margin-xl);
+    margin-bottom: var(--margin-s);
+}
+
+#event hr {
+    border: none;
+    border-top: 2px solid #ddd;
+    margin: var(--margin-l) 0;
+}
+
+#features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--margin-l);
+    margin-top: var(--margin-l);
+}
+
+@media (min-width: 768px) {
+    #features {
+        grid-template-columns: 1fr 2fr;
+    }
+}
+
+/* ========== VENUE PANEL ========== */
+#venue > h2 {
+    font-size: var(--font-m);
+    margin-bottom: var(--margin-l);
+}
+
+#venue > h2 span {
+    font-size: var(--font-m);
+    color: var(--nav-clicked-text-color);
+    padding: var(--margin-m);
+    border-radius: 2rem;
+    background-color: var(--nav-background-color);
+    display: inline-block;
+    margin-right: var(--margin-s);
+}
+
+.venue-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--margin-l);
+    height: auto;
+    margin-bottom: var(--margin-l);
+}
+
+@media (min-width: 768px) {
+    .venue-container {
+        grid-template-columns: 1fr 1fr;
+        height: 55vh;
+    }
+}
+
 #caceres-slideshow {
     position: relative;
     overflow: hidden;
-    background-color: var(--nav-background-color); /* fallback color */
+    background-color: var(--nav-background-color);
+    border: 3px solid var(--nav-clicked-text-color);
+    border-radius: 0.35rem;
+    min-height: 250px;
+    z-index: 0;
 }
 
+@media (min-width: 768px) {
+    #caceres-slideshow {
+        min-height: auto;
+    }
+}
+
+/* Villa Caceres slideshow layers */
 .caceres-bg {
     position: absolute;
     inset: 0;
@@ -120,435 +431,373 @@ body {
     opacity: 1;
 }
 
-#caceres-slideshow > *:not(.caceres-bg) {
-    position: relative; /* ensure any inner content sits above backgrounds */
+#embedded-maps {
+    border: 1px solid #ccc;
+    border-radius: 0.35rem;
+    overflow: hidden;
+    min-height: 250px;
     z-index: 1;
 }
 
-/* Attire slider styles */
-.attire-slider{
+@media (min-width: 768px) {
+    #embedded-maps {
+        min-height: auto;
+    }
+}
+
+/* ========== ATTIRE PANEL ========== */
+.attire-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--margin-l);
+    margin-bottom: var(--margin-l);
+}
+
+@media (min-width: 768px) {
+    .attire-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.attire-section {
+    height: auto;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: var(--margin-m);
+    min-height: 664px;
+}
+
+@media (min-width: 768px) {
+    .attire-section {
+        height: 815px;
+        grid-template-rows: auto 1fr;
+    }
+}
+
+.section-title {
+    align-content: center;
+    text-align: center;
+    font-size: var(--font-m);
+    font-weight: 600;
+}
+
+.section-content {
+    background-color: var(--nav-background-color);
+    color: var(--nav-clicked-text-color);
+    border-radius: 0 0 3% 3%;
+    padding: var(--margin-m);
+    display: grid;
+    place-items: center;
+    height: 100%;
+    min-height: 600px;
+}
+
+/* Attire slider */
+.attire-slider {
     position: relative;
     width: 100%;
     height: 100%;
-    /* keep slider visually consistent regardless of image aspect ratio */
     display: grid;
     place-items: center;
     overflow: hidden;
+    outline: none;
+    min-height: 250px;
 }
-.attire-slider .attire-current{
-    /* fill the slider box uniformly */
+
+.attire-slider .attire-current {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* fills the box*/
+    object-fit: contain;
     border-radius: 0.35rem;
+    max-width: 100%;
+    max-height: 100%;
 }
-.attire-controls{
+
+.attire-controls {
     position: absolute;
     inset: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    pointer-events: none; /* allow clicks only on buttons */
+    pointer-events: none;
 }
-.attire-controls button{
+
+.attire-controls button {
     pointer-events: auto;
-    background: rgba(0,0,0,0.35);
+    background: rgba(0, 0, 0, 0.35);
     color: white;
     border: none;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: clamp(2rem, 8vw, 2.5rem);
+    height: clamp(2rem, 8vw, 2.5rem);
     border-radius: 50%;
-    font-size: 1.25rem;
+    font-size: clamp(1rem, 3vw, 1.25rem);
     display: grid;
     place-items: center;
-    margin: 0.5rem;
+    margin: var(--margin-m);
     cursor: pointer;
+    transition: background 200ms ease;
 }
-.attire-hint{
+
+.attire-controls button:hover {
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.attire-hint {
     position: absolute;
     bottom: 0.6rem;
     right: 0.8rem;
-    background: rgba(255,255,255,0.85);
+    background: rgba(255, 255, 255, 0.85);
     color: #000;
     padding: 0.25rem 0.6rem;
     border-radius: 1rem;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
 }
 
-h1 {
-    font-size: var(--font-l);
-    margin: 0;
-    padding: 0;
+@media (max-width: 480px) {
+    .attire-hint {
+        display: none;
+    }
 }
 
-.left {
-    width: 50%;
+/* ========== SCHEDULE PANEL ========== */
+.schedule-table {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--margin-m);
+    margin-bottom: var(--margin-xl);
+    overflow-x: auto;
+}
+
+@media (max-width: 480px) {
+    .schedule-table {
+        grid-template-columns: 1fr 1.5fr;
+        gap: 0;
+        font-size: 0.8rem;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+    .schedule-table {
+        grid-template-columns: auto 1fr;
+    }
+}
+
+@media (min-width: 768px) {
+    .schedule-table {
+        grid-template-columns: auto 1fr;
+    }
+}
+
+.date-column,
+.activity-column {
+    display: grid;
+    grid-template-rows: auto repeat(5, 1fr);
+    gap: 0;
+}
+
+.table-header,
+.table-row {
+    border-bottom: 1px solid #ccc;
+    font-size: var(--font-s);
+    padding: var(--margin-s);
+    min-height: 3rem;
     display: flex;
-    flex-direction: column;
-    gap: 6rem;
-    height: 60vh;
-    padding-left: var(--margin-xxl);
-    translate: 0 50%;
+    align-items: center;
 }
 
-.left > .container {
-    padding: 0;
-
-    &:nth-child(2){
-
-        & p{
-            margin: var(--margin-xxs);
-            font-size: var(--font-m);
-            
-            &:nth-child(2){
-                font-size: var(--font-l);
-            }
-        }
+@media (max-width: 480px) {
+    .table-header,
+    .table-row {
+        font-size: 0.75rem;
+        padding: 0.5rem;
+        min-height: 2.5rem;
     }
 }
 
-#title {
-
-    & p {
-        font-size: var(--font-m);
-        margin:0;
-        padding: 0;
-        line-height: 1;
-        /* border: 1px solid white;  */
-
-        &:nth-child(2){
-            font-size: var(--font-xxl);
-            font-family: "Brillant";
-            line-height: 1.2;
-            margin-left: var(--margin-m);
-            margin-top: var(--margin-xl);
-        }
-        &:nth-child(3){
-            font: var(--font-l);
-            margin-left: var(--margin-m);
-        }
-    }
-}
-
-#stack {
-
-    & > .panel{
-        
-        &:nth-child(1){
-            /* translate: 50% 0; */
-
-            /* & button{
-                z-index: 10;
-                margin-top: var(--margin-xl);
-                font-size: var(--font-m);
-                background-color: transparent;
-                cursor: pointer;
-                border: 1px solid #FFFFFF;
-                border-radius: 2px;
-                color: #FFFFFF;
-            } */
-
-            & .left .container{
-
-                &:nth-child(2){
-
-                    & p:nth-child(1){
-                        color: var(--nav-border-color);
-                    }
-                }
-            }
-        }
-        
-        &:nth-child(2){
-            width: 100%;
-            /* stick the main-screen so it stops when its top reaches halfway down the viewport */
-            position: sticky;
-            top: 50vh;
-            z-index: 2; /* make sure it sits above the hero overlay */
-            min-height: 100vh; /* use min-height instead of height */
-            background-color: var(--background-color);
-            overflow: visible; /* remove separate scrollbar */
-            padding: var(--margin-xxl) 14rem 0 14rem;
-
-            & p{
-                color: var(--text-color);
-            }
-
-            & #navbar{
-                /* border: 1px solid black; */
-                display: grid;
-                grid-template-columns: repeat(5, 1fr);
-                
-
-                & button{
-                    border: none;
-                    border-bottom: 1px solid var(--nav-border-color);
-                    background-color: transparent;
-                    text-align: center;
-                    align-content: center;
-                    font-size: var(--font-s);
-                    color: var(--nav-text-color);
-                    cursor: pointer;
-                    border-radius: var(--font-xxs) var(--font-xxs) 0 0;
-                    letter-spacing: var(--font-xxs);
-                    line-height: 3;
-
-                    &:hover{
-                        text-decoration: underline;
-                    }
-
-                    /* &:focus{
-                        color: var(--nav-clicked-text-color);
-                        background-color: var(--nav-background-color);
-                        text-decoration: underline;
-                    } */
-                    &.selected{
-                        color: var(--nav-clicked-text-color);
-                        background-color: var(--nav-background-color);
-                        text-decoration: underline;
-                    }
-                }
-            }
-        }
-    }
-}
-
-#content {
-    /* border: 1px solid black; */
-    color: black;
-    font-size: var(--font-l);
-    padding-top: var(--margin-xl);
-    overflow-y: hidden; /* ensure content doesn't create scrollbar */
-    height: max-content;
-    
-    & > .panel {
-
-        &:nth-child(1){
-
-            & > div {
-                display: grid;
-                grid-template-columns: 4fr 5fr;
-
-                & > div{
-                    display: grid;
-                    grid-template-rows: auto auto;
-
-                    & img{
-                        width: 60%;
-                        height: auto;
-                        border-radius: var(--margin-s);
-                        justify-self: center;
-                        margin-top: var(--margin-l);
-                    }
-                }
-                
-                & h1{
-                    line-height: 1;
-                    align-content: end;
-                    & span{
-                        font-size: var(--font-xxl);
-                        font-family: brillant;
-                        padding: 0;
-                        margin: 0;
-                    }
-                }
-
-                & > p{
-                    align-content: center;
-                    line-height: 1.7;
-                }
-            }
-
-            & ul{
-                list-style:square;
-                padding: var(--margin-m);
-                margin: 0 0 var(--margin-xxl) 0;
-
-                & li{
-                    margin-bottom: var(--margin-s);
-                    font-size: var(--font-m);
-                    line-height: 1;
-                }
-            }
-
-            & h2{
-                font-size: var(--font-m);
-                margin-top: var(--margin-xl);
-                margin-bottom: var(--margin-s);
-            }
-
-            & #features{
-                grid-template-columns: 1fr 2fr;
-                
-                & > *{
-                    /* border: 1px solid black; */
-                }
-                & p{
-                    padding-top: var(--margin-l); 
-                    align-content: start;
-                }
-            }
-        }
-
-        &:nth-child(2){
-
-            & h2{
-                font-size: var(--font-m);
-                margin-bottom: var(--margin-l);
-
-                & span{
-                    font-size: var(--font-m);
-                    font-style: bold;
-                    color: var(--nav-clicked-text-color);
-                    padding: var(--margin-m);
-                    border-radius: 2rem;
-                    background-color: var(--nav-background-color);
-                    /* background-image: url('/images/villa caceres/caceres logo.png'); */
-
-                    & img{
-                        width :10rem;
-                    }
-                }
-            }
-
-            & > div{
-                /* border: 1px solid black; */
-                height: 55vh;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 5%;                
-
-                & #caceres-slideshow{
-                    border: 3px solid var(--nav-clicked-text-color);
-                    border-radius: 0.35rem;
-                    align-content: center;
-                    text-align: center;
-
-                }
-
-                & #embedded-maps{
-                    border: 1px solid black;
-                    align-content: center;
-                    text-align: center;
-                }
-            }
-        }
-
-        &:nth-child(3){
-            height: max-content;
-
-            & > div{
-                /* border: 1px solid black; */
-                height: 36rem;
-                margin-bottom: var(--margin-l);
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 1vw;
-
-                & > *{
-                    /* border: 1px solid black; */
-                    height: 100%;
-                    display: grid;
-                    grid-template-rows: 1fr 9fr;
-
-                    > *{
-                        /* border: 1px solid black; */
-                    }
-
-                    & > .head{
-                        align-content: center;
-                        text-align: center;
-                    }
-
-                    & > .text{
-                        background-color: var(--nav-background-color);
-                        align-content: center;
-                        text-align: right;
-                        color: var(--nav-clicked-text-color);
-                        border-radius: 0 0 3% 3%;
-                        padding: var(--margin-s);
-                        margin-bottom: var(--margin-m);
-
-                        & *{
-                            background-size: cover;
-                        }
-                    }
-                }
-            }
-        }
-
-        &:nth-child(4){
-            
-            & .table{
-                /* border: 1px solid black; */
-                height: 24rem;
-                margin-bottom: var(--margin-xl);
-                display: grid;
-                grid-template-columns: 1fr 3fr;
-
-                & > *{
-                    /* border: 1px solid black; */
-                    display: grid;
-                    grid-template-rows: repeat(6, 4rem);
-
-                    > *{
-                        border-bottom: 1px solid black;
-                        font-size: var(--font-m);
-                        align-content: center;
-                        padding-left: var(--margin-xs);
-                    }
-
-                    & .item1{
-                        background-color: var(--nav-background-color);
-                        align-content: center;
-                        text-align: center;
-                        color: var(--nav-clicked-text-color);
-                    }
-                }
-
-                & .Date{
-                        border-right: 1px solid black;
-                    }
-            }
-        }
-    }
-
-    & p{
-        font-size: var(--font-s);
-        font-weight: normal;
-
-        & > span{
-            font-size: calc(var(--font-s) + 2px);
-            font-weight: bold;
-        }
-    }
-}
-
-/* animation for content children when panel changes */
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-/* animate navbar button background when selected */
-#navbar button {
-    transition: background-color 260ms cubic-bezier(.2,.9,.2,1),
-                color 260ms cubic-bezier(.2,.9,.2,1),
-                transform 260ms cubic-bezier(.2,.9,.2,1);
-}
-
-#navbar button.selected {
+.table-header {
     background-color: var(--nav-background-color);
     color: var(--nav-clicked-text-color);
-    /* subtle pop + fade using the same keyframe */
-    animation: fadeUp 360ms cubic-bezier(.2,.9,.2,1) both;
-    transform: translateY(-4px);
+    text-align: center;
+    font-weight: 600;
 }
 
+.date-column {
+    border-right: 1px solid #ccc;
+}
+
+@media (max-width: 480px) {
+    .date-column {
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+    }
+}
+
+/* ========== CONTACT PANEL ========== */
+#contact h1 {
+    font-size: var(--font-l);
+    margin: var(--margin-l) 0;
+}
+
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--margin-xl);
+    margin-top: var(--margin-xl);
+    margin-bottom: var(--margin-xl);
+}
+
+@media (min-width: 768px) {
+    .contact-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.contact-card {
+    background-color: #f5f5f5;
+    border-left: 5px solid var(--nav-background-color);
+    border-radius: var(--margin-s);
+    padding: var(--margin-l);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-card h3 {
+    font-size: var(--font-l);
+    margin: 0 0 var(--margin-m) 0;
+    color: var(--nav-background-color);
+    font-weight: 600;
+}
+
+.contact-card p {
+    font-size: var(--font-s);
+    margin: var(--margin-s) 0;
+    line-height: 1.8;
+    color: var(--text-color);
+}
+
+.contact-card a {
+    color: var(--nav-background-color);
+    text-decoration: none;
+    transition: text-decoration 200ms ease;
+}
+
+.contact-card a:hover {
+    text-decoration: underline;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== RESPONSIVE BREAKPOINTS ========== */
+
+/* Mobile: up to 480px */
+@media (max-width: 480px) {
+    #main-screen {
+        padding: var(--margin-m) var(--margin-m) 0;
+    }
+
+    #navbar {
+        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    }
+
+    #navbar button,
+    .nav-button {
+        font-size: 0.7rem;
+        padding: 0 var(--margin-xs);
+        line-height: 2;
+    }
+
+    #event img {
+        max-width: 100%;
+    }
+}
+
+/* Tablet: 481px to 1023px */
+@media (min-width: 481px) and (max-width: 1023px) {
+    #main-screen {
+        padding: var(--margin-xl) clamp(1.5rem, 5vw, 4rem) 0;
+    }
+
+    #navbar {
+        grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    }
+}
+
+/* Laptop: 1024px and up */
+@media (min-width: 1024px) {
+    #main-screen {
+        padding: var(--margin-xxl) 14rem 0;
+    }
+
+    #navbar {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    #event > div,
+    .theme-section {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #features {
+        grid-template-columns: 1fr 2fr;
+    }
+
+    .venue-container {
+        grid-template-columns: 1fr 1fr;
+        height: 55vh;
+    }
+
+    .attire-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .attire-section {
+        height: 450px;
+        grid-template-rows: auto 1fr;
+    }
+
+    .schedule-table {
+        grid-template-columns: auto 1fr;
+    }
+}
+
+/* ========== ACCESSIBILITY ========== */
 @media (prefers-reduced-motion: reduce) {
-    #navbar button, #navbar button.selected {
-        transition: none !important;
-        animation: none !important;
-        transform: none !important;
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast for accessibility */
+@media (prefers-contrast: more) {
+    #navbar button,
+    .nav-button {
+        border-width: 3px;
+    }
+
+    .attire-controls button {
+        background: rgba(0, 0, 0, 0.7);
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .table-header,
+    .table-row {
+        border-color: #555;
+    }
+
+    #embedded-maps {
+        border-color: #555;
     }
 }
