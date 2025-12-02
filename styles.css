@@ -798,6 +798,14 @@ article.panel {
     #event img {
         max-width: 100%;
     }
+
+    #event p,
+    #event li,
+    #rsvp > p,
+    .contact-card p,
+    .table-row {
+        font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    }
 }
 
 /* Tablet: 481px to 1023px */
