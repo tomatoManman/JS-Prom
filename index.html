@@ -2,68 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>JS Prom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="PSHS-BRC Batch 2027-2028 Promenade - Rêveuse: The Night the Flowers Remembered">
+    <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="styles-fixed.css">
+    <title>Rêveuse - PSHS-BRC Promenade</title>
 </head>
-<script src="script.js"></script>
-<body>
+<body role="application">
     <div id="stack">
-        <div id="pictures-slideshow" class="panel">
-            <!-- two background layers for smooth crossfade -->
+        <!-- HERO SECTION: Pictures Slideshow -->
+        <section id="pictures-slideshow" class="panel" aria-label="Welcome Hero Section">
+            <!-- Two background layers for smooth crossfade effect -->
             <div class="slideshow-bg" aria-hidden="true"></div>
             <div class="slideshow-bg" aria-hidden="true"></div>
-            <div class="left">
-                <div id="title" class="container">
-                    <p>Welcome to</p>
-                    <p id="Prom-name">Rêveuse</p>
-                    <p>The Night the Flowers Remembered</p>
-                </div>
-                <div class="container">
-                    <p>Save the date</p>
-                    <p>February 20, 2026</p>
+            
+            <!-- Hero content overlay -->
+            <div class="hero-content">
+                <div class="left">
+                    <div id="title" class="container">
+                        <p>Welcome to</p>
+                        <p id="prom-name">Rêveuse</p>
+                        <p>The Night the Flowers Remembered</p>
+                    </div>
+                    <div class="container">
+                        <p>Save the date</p>
+                        <p>February 20, 2026</p>
+                    </div>
                 </div>
             </div>
-            <div class="scroll-down">
+            
+            <div class="scroll-down" aria-label="Scroll down to see more content">
                 <p>Scroll for more---></p>
             </div>
-        </div>
-        <div class="panel" id="main-screen">
-            <div id="navbar">
-                <button data-target="event">EVENT</button>
-                <button data-target="venue">VENUE</button>
-                <button data-target="schedule">SCHEDULE</button>  
-                <button data-target="attire">ATTIRE</button>
-                <button data-target="contact">CONTACT</button>
-            </div>
+        </section>
+
+        <!-- MAIN CONTENT SECTION -->
+        <section class="panel" id="main-screen">
+            <!-- Navigation Bar -->
+            <nav id="navbar" aria-label="Main Navigation">
+                <button data-target="event" class="nav-button">EVENT</button>
+                <button data-target="venue" class="nav-button">VENUE</button>
+                <button data-target="schedule" class="nav-button">SCHEDULE</button>  
+                <button data-target="attire" class="nav-button">ATTIRE</button>
+                <button data-target="contact" class="nav-button">CONTACT</button>
+            </nav>
+
+            <!-- Content Panels Container -->
             <div id="content">
-                <div class="panel" id="event">
+                <!-- EVENT PANEL -->
+                <article class="panel" id="event" data-panel="event">
                     <h1>Welcome to the PSHS-BRC Batch 2027-2028 Promenade!</h1>
                     <p>The Junior–Senior Promenade, titled <span>Rêveuse: The Night the Flowers Remembered</span>, will be
                     held on February 20, 2026. It is an event organized by the Batch 2027 and Batch 2028 Councils,
                     under the guidance of Mr. Joel R. Reginales, and with the support of the Grade 10 and Grade
                     11 advisers.
                     </p>
-                    <!-- <div id="meaning">
-                        <h1>Rêveuse<span>(reh-vuhz)</span></h1>
-                        <p>French</p>
-                    </div> -->
+
                     <hr>
-                    <div>
+                    <div class="theme-section">
                         <div>
-                            <img src="images/Ethereal Girl Aesthetic.jpeg" alt="Ethereal Aesthetic">
+                            <img src="images/Ethereal Girl Aesthetic.jpeg" alt="Ethereal aesthetic theme image">
                             <h1><span>"</span>Whimsical / Ethereal / Gardencore</h1>
                         </div>
                         <div>
                             <h1>Theme</h1>
-                            <p>Rêveuse seeks to blend elegance and
-                            creativity in an atmosphere that celebrates youth, growth, and unity. This Promenade also
+                            <p>Rêveuse seeks to blend elegance and creativity in an atmosphere that celebrates youth, growth, and unity. This Promenade also
                             serves as a culminating social activity for scholars of Grades 10 and 11. It provides an avenue
                             for students to demonstrate proper social etiquette in a formal setting while commemorating a
                             meaningful milestone in their Pisay-Bikol journey.
                             </p>
                         </div>
                     </div>
+
                     <hr>
                     <h2>This event is complete with traditional features such as:</h2>
                     <div id="features">
@@ -79,17 +89,18 @@
                         will serve as guests and chaperones.
                         </p>
                     </div>
-                </div>
-                <div class="panel" id="venue" style="display:none;">
+                </article>
+
+                <!-- VENUE PANEL -->
+                <article class="panel" id="venue" data-panel="venue" style="display: none;">
                     <h2><span>Villa Caceres Hotel</span> Magsaysay Avenue, Naga City</h2>
-                    <div>
+                    <div class="venue-container">
                         <div id="caceres-slideshow">
-                            <!-- background layers for Villa Caceres slideshow -->
+                            <!-- Background layers for Villa Caceres slideshow -->
                             <div class="caceres-bg" aria-hidden="true"></div>
                             <div class="caceres-bg" aria-hidden="true"></div>
-                            <!-- optional caption/content can go here -->
                         </div>
-                        <div id="embedded-maps">
+                        <div id="embedded-maps" aria-label="Villa Caceres Hotel location on map">
                             <!-- Embedded map showing Villa Caceres Hotel -->
                             <iframe
                                 title="Villa Caceres Hotel location"
@@ -103,63 +114,91 @@
                             </iframe>
                         </div>
                     </div>
+                </article>
 
-                </div>
-                <div class="panel" id="attire" style="display:none;">
-                    <div>
-                        <div id="boys">
-                            <div class="head">Boys</div>
-                            <div class="text">
-                                <div class="attire-slider" data-gender="boys" tabindex="0" aria-label="Boys attire slideshow">
+                <!-- ATTIRE PANEL -->
+                <article class="panel" id="attire" data-panel="attire" style="display: none;">
+                    <div class="attire-container">
+                        <div id="boys" class="attire-section">
+                            <div class="section-title">Boys</div>
+                            <div class="section-content">
+                                <div class="attire-slider" data-gender="boys" tabindex="0" aria-label="Boys attire slideshow gallery">
                                     <img class="attire-current" src="images/attire/boys1.png" alt="Boys attire example">
                                     <div class="attire-controls">
-                                        <button class="attire-prev" aria-label="Previous">‹</button>
-                                        <button class="attire-next" aria-label="Next">›</button>
+                                        <button class="attire-prev" aria-label="Previous attire image">‹</button>
+                                        <button class="attire-next" aria-label="Next attire image">›</button>
                                     </div>
                                     <div class="attire-hint">Swipe right →</div>
                                 </div>
                             </div>
                         </div>
-                        <div id="girls">
-                            <div class="head">Girls</div>
-                            <div class="text">
-                                <div class="attire-slider" data-gender="girls" tabindex="0" aria-label="Girls attire slideshow">
+                        <div id="girls" class="attire-section">
+                            <div class="section-title">Girls</div>
+                            <div class="section-content">
+                                <div class="attire-slider" data-gender="girls" tabindex="0" aria-label="Girls attire slideshow gallery">
                                     <img class="attire-current" src="images/attire/girls.png" alt="Girls attire example">
                                     <div class="attire-controls">
-                                        <button class="attire-prev" aria-label="Previous">‹</button>
-                                        <button class="attire-next" aria-label="Next">›</button>
+                                        <button class="attire-prev" aria-label="Previous attire image">‹</button>
+                                        <button class="attire-next" aria-label="Next attire image">›</button>
                                     </div>
                                     <div class="attire-hint">Swipe right →</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="panel" id="schedule" style="display:none">
-                    <div class="table">
-                        <div class="Date">
-                            <div class="item1">Date</div>
-                            <div class="item2">October 30, 2025</div>
-                            <div class="item3">October 31, 2025 - November 3, 2025</div>
-                            <div class="item4">November 17, 2025</div>
-                            <div class="item5">November 31, 2025</div>
-                            <div class="item6">February 20, 2026 (Friday)</div>
+                </article>
+
+                <!-- SCHEDULE PANEL -->
+                <article class="panel" id="schedule" data-panel="schedule" style="display: none;">
+                    <div class="schedule-table">
+                        <div class="date-column">
+                            <div class="table-header">Date</div>
+                            <div class="table-row">October 30, 2025</div>
+                            <div class="table-row">October 31, 2025 - November 3, 2025</div>
+                            <div class="table-row">November 17, 2025</div>
+                            <div class="table-row">November 31, 2025</div>
+                            <div class="table-row">February 20, 2026 (Friday)</div>
                         </div>
-                        <div class="Activity">
-                            <div class="item1">Activity</div>
-                            <div class="item2">Deadline for submission of Prom and Partnership Consent Forms</div>
-                            <div class="item3">First collection of contributions (via GCash)</div>
-                            <div class="item4">Second collection of contributions</div>
-                            <div class="item5">Third and final collection of contributions</div>
-                            <div class="item6">Rêveuse: The Night the Flowers Remembered - Junior-Senior Promenade at Villa Caceres Hotel, Naga City</div>
+                        <div class="activity-column">
+                            <div class="table-header">Activity</div>
+                            <div class="table-row">Deadline for submission of Prom and Partnership Consent Forms</div>
+                            <div class="table-row">First collection of contributions (via GCash)</div>
+                            <div class="table-row">Second collection of contributions</div>
+                            <div class="table-row">Third and final collection of contributions</div>
+                            <div class="table-row">Rêveuse: The Night the Flowers Remembered - Junior-Senior Promenade at Villa Caceres Hotel, Naga City</div>
                         </div>
                     </div>
-                </div>
-                <div class="panel" id="contact" style="display:none;">
+                </article>
+
+                <!-- CONTACT PANEL -->
+                <article class="panel" id="contact" data-panel="contact" style="display: none;">
                     <h1>If you have any questions, contact us via the following:</h1>
-                </div>
+
+                    <div class="contact-container">
+                        <div class="contact-card">
+                            <h3>Contact Person 1</h3>
+                            <p><strong>Name:</strong> Heleina B. Lim</p>
+                            <p><strong>Position:</strong> 2027 Batch Representative</p>
+                            <p><strong>Phone:</strong> <a href="tel:+639171245771">+63 917-1245-771</a></p>
+                            <p><strong>Email:</strong> <a href="mailto:heleina.lim@brc.pshs.edu.ph">heleina.lim@brc.pshs.edu.ph</a></p>
+                            <p><strong>Facebook Messenger:</strong> <a href="https://m.me" target="_blank">Heleina Lim</a></p>
+                        </div>
+
+                        <div class="contact-card"> 
+                            <h3>Contact Person 2</h3>
+                            <p><strong>Name:</strong> Daryl Ashlei C. Teves</p>
+                            <p><strong>Position:</strong> 2028 Batch Representative</p>
+                            <p><strong>Phone:</strong> <a href="tel:+639683041648">+63 968-3041-648</a></p>
+                            <p><strong>Email:</strong> <a href="mailto:dcteves@brc.pshs.edu.ph">dcteves@brc.pshs.edu.ph</a></p>
+                            <p><strong>Facebook Messenger:</strong> <a href="https://m.me" target="_blank">Daryl Ashlei</a></p>
+                        </div>
+                    </div>
+                </article>
             </div>
-        </div>
+        </section>
     </div>
+
+    <!-- Defer script loading for better performance -->
+    <script src="script-fixed.js" defer></script>
 </body>
 </html>
