@@ -13,6 +13,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: "C&L";
+    src: url(/fonts/champagne_limousines/Champagne&Limousines.ttf);
+    font-weight: 100;
+    font: normal;
+}
+
 /* ========== CSS VARIABLES ========== */
 :root {
     /* Responsive typography using clamp */
@@ -49,7 +56,13 @@
 * {
     font-family: "Poppins", sans-serif;
     box-sizing: border-box;
-    font-weight: 300;
+    font-weight: 400;
+}
+
+@media (max-width: 600px){
+    * {
+        font-family: "C&L", sans-serif;
+    }
 }
 
 html {
@@ -69,6 +82,21 @@ body {
     text-align: left;
     overflow-y: auto;
     position: relative;
+}
+
+.not-cl {
+    font-family: "Poppins", sans-serif;
+}
+h1 {
+    font-family: "Poppins", sans-serif;
+}
+
+h2 {
+    font-weight: light;
+}
+
+.brilliant {
+    font-family: "Brillant", sans-serif;
 }
 
 /* ========== HERO SECTION ========== */
@@ -155,6 +183,8 @@ body {
     font-size: var(--font-m);
     margin: 0;
     padding: 0;
+    font-weight: 400;
+    color: white;
 }
 
 #title p:nth-child(2) {
@@ -253,12 +283,13 @@ body {
 
 /* ========== CONTENT CONTAINER ========== */
 #content {
-    color: var(--text-color);
+    color: #222;
     font-size: var(--font-l);
     padding-top: var(--margin-xs);
     overflow: visible;
     flex: 1;
     width: 100%;
+    font-weight: 400;
 }
 
 #content > .panel,
@@ -318,6 +349,8 @@ article.panel {
     font-size: var(--font-xl);
     margin: var(--margin-m) 0;
     padding: 0;
+    font-weight: 600;
+    color: #1a1a1a;
 }
 
 #event h1 span {
@@ -330,6 +363,8 @@ article.panel {
     font-size: var(--font-s);
     line-height: 1.6;
     margin-bottom: var(--margin-m);
+    font-weight: 500;
+    color: #222;
 }
 
 #event ul {
@@ -341,12 +376,16 @@ article.panel {
 #event li {
     margin-bottom: var(--margin-s);
     font-size: var(--font-m);
+    font-weight: 500;
+    color: #222;
 }
 
 #event h2 {
     font-size: var(--font-m);
     margin-top: var(--margin-xl);
     margin-bottom: var(--margin-s);
+    font-weight: 600;
+    color: #1a1a1a;
 }
 
 #event hr {
@@ -603,6 +642,8 @@ article.panel {
     min-height: 3rem;
     display: flex;
     align-items: center;
+    font-weight: 400;
+    color: #222;
 }
 
 @media (max-width: 480px) {
@@ -632,10 +673,43 @@ article.panel {
     }
 }
 
+/* ========== RSVP PANEL ========== */
+#rsvp h1 {
+    font-size: var(--font-l);
+    margin: var(--margin-l) 0;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+#rsvp > p {
+    font-size: var(--font-s);
+    line-height: 1.6;
+    margin-bottom: var(--margin-l);
+    font-weight: 400;
+    color: #222;
+    max-width: 600px;
+}
+
+.rsvp-container {
+    width: 100%;
+    max-width: 800px;
+    margin: var(--margin-xl) 0;
+    border-radius: var(--margin-s);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rsvp-container iframe {
+    display: block;
+    border: none;
+}
+
 /* ========== CONTACT PANEL ========== */
 #contact h1 {
     font-size: var(--font-l);
     margin: var(--margin-l) 0;
+    font-weight: 600;
+    color: #1a1a1a;
 }
 
 .contact-container {
@@ -671,7 +745,8 @@ article.panel {
     font-size: var(--font-s);
     margin: var(--margin-s) 0;
     line-height: 1.8;
-    color: var(--text-color);
+    color: #222;
+    font-weight: 400;
 }
 
 .contact-card a {
@@ -705,14 +780,18 @@ article.panel {
     }
 
     #navbar {
-        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--margin-xs);
     }
 
     #navbar button,
     .nav-button {
-        font-size: 0.7rem;
-        padding: 0 var(--margin-xs);
-        line-height: 2;
+        font-size: 0.65rem;
+        padding: var(--margin-xs);
+        line-height: 1.8;
+        white-space: normal;
+        text-align: center;
+        word-break: break-word;
     }
 
     #event img {
