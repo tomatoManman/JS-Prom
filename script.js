@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // ========== VILLA CACERES SLIDESHOW ==========
     setupCaceresSlideshow();
 
+    // ========== THEME SLIDESHOW ==========
+    setupThemeSlideshow();
+
     // ========== ATTIRE SLIDERS ==========
     setupAttireSliders();
 
@@ -231,6 +234,132 @@ function setupCaceresSlideshow() {
 }
 
 /**
+ * Theme Slideshow
+ * Auto-cycles through theme inspiration images every 6 seconds with smooth crossfade
+ * Uses dual-layer technique for seamless transitions
+ */
+function setupThemeSlideshow() {
+    const slider = document.querySelector('.theme-slideshow');
+    if (!slider) {
+        console.warn('⚠ Theme slideshow element not found');
+        return;
+    }
+
+    const images = [
+        'images/theme/theme1.jpg',
+        'images/theme/theme2.jpg',
+        'images/theme/theme3.jpg'
+    ];
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let index = 0;
+    let themeInterval = null;
+
+    const currentImg = slider.querySelector('.theme-current');
+    const nextImg = slider.querySelector('.theme-next-img');
+    const prevBtn = slider.querySelector('.theme-prev');
+    const nextBtn = slider.querySelector('.theme-next');
+    const dotsContainer = slider.querySelector('.theme-dots');
+
+    // Create indicator dots
+    if (dotsContainer) {
+        images.forEach((img, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'theme-dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', `Image ${i + 1} of ${images.length}`);
+            dotsContainer.appendChild(dot);
+        });
+    }
+
+    const updateDots = () => {
+        if (!dotsContainer) return;
+        const dots = dotsContainer.querySelectorAll('.theme-dot');
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+    };
+
+    const setImage = (newIndex) => {
+        newIndex = ((newIndex % images.length) + images.length) % images.length;
+        
+        // Prepare next image
+        nextImg.src = images[newIndex];
+        nextImg.style.opacity = '0';
+        
+        // Trigger fade transition
+        setTimeout(() => {
+            nextImg.style.opacity = '1';
+            currentImg.style.opacity = '0';
+        }, 10);
+        
+        // After transition completes, swap layers
+        setTimeout(() => {
+            currentImg.src = images[newIndex];
+            currentImg.style.opacity = '1';
+            nextImg.style.opacity = '0';
+            index = newIndex;
+            updateDots();
+        }, 1620); // Slightly longer than transition duration
+    };
+
+    /**
+     * Start the auto-cycling slideshow
+     */
+    const startSlideshow = () => {
+        if (prefersReduced) {
+            console.log('✓ Reduced motion enabled - theme slideshow auto-play disabled');
+            return;
+        }
+
+        // Clear existing interval to prevent duplicates
+        if (themeInterval) {
+            clearInterval(themeInterval);
+        }
+
+        // Change image every 6 seconds
+        themeInterval = setInterval(() => {
+            setImage(index + 1);
+        }, 6000);
+
+        window.themeSlideInterval = themeInterval;
+        console.log(`✓ Theme slideshow interval started (${images.length} images, 6s interval)`);
+    };
+
+    // Click handlers (manual navigation)
+    if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setImage(index + 1);
+        });
+    }
+    if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setImage(index - 1);
+        });
+    }
+
+    // Keyboard navigation
+    slider.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            setImage(index + 1);
+        }
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            setImage(index - 1);
+        }
+    });
+
+    // Initialize
+    currentImg.src = images[0];
+    nextImg.src = images[1];
+    updateDots();
+    startSlideshow();
+    console.log('✓ Theme slideshow initialized with', images.length, 'images');
+}
+
+/**
  * Attire Sliders
  * Handles click, keyboard, and swipe navigation for boys/girls attire galleries
  */
@@ -250,16 +379,15 @@ function setupAttireSliders() {
             'images/attire/boys5.png',
             'images/attire/boys6.png',
             'images/attire/boys7.png',
-            'images/attire/boys8.png'
+            'images/attire/boys8.png',
         ],
         girls: [
-            'images/attire/girls.png',
             'images/attire/girls1.png',
             'images/attire/girls2.png',
             'images/attire/girls4.png',
             'images/attire/girls5.jpg',
             'images/attire/girls6.png',
-            'images/attire/girls7.png'
+            'images/attire/girls7.png',
         ]
     };
 
@@ -271,10 +399,30 @@ function setupAttireSliders() {
         const imgEl = slider.querySelector('.attire-current');
         const prevBtn = slider.querySelector('.attire-prev');
         const nextBtn = slider.querySelector('.attire-next');
+        const dotsContainer = slider.querySelector('.attire-dots');
+
+        // Create indicator dots
+        if (dotsContainer) {
+            imgs.forEach((img, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'attire-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', `Image ${i + 1} of ${imgs.length}`);
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        const updateDots = () => {
+            if (!dotsContainer) return;
+            const dots = dotsContainer.querySelectorAll('.attire-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        };
 
         const setImage = (i) => {
             index = ((i % imgs.length) + imgs.length) % imgs.length;
             if (imgEl) imgEl.src = imgs[index];
+            updateDots();
         };
 
         // Click handlers
@@ -305,8 +453,18 @@ function setupAttireSliders() {
 
         // Touch swipe detection
         let touchStartX = null;
+        let mouseStartX = null;
+        let isDragging = false;
+
         slider.addEventListener('touchstart', (e) => {
-            if (e.touches && e.touches.length) touchStartX = e.touches[0].clientX;
+            if (e.touches && e.touches.length) {
+                touchStartX = e.touches[0].clientX;
+                isDragging = true;
+            }
+        }, { passive: true });
+
+        slider.addEventListener('touchmove', (e) => {
+            // Can add visual feedback here if needed
         }, { passive: true });
 
         slider.addEventListener('touchend', (e) => {
@@ -320,13 +478,56 @@ function setupAttireSliders() {
             const THRESHOLD = 40; // pixels
 
             if (dx > THRESHOLD) {
-                // Swipe right -> next image
-                setImage(index + 1);
-            } else if (dx < -THRESHOLD) {
                 // Swipe left -> previous image
                 setImage(index - 1);
+            } else if (dx < -THRESHOLD) {
+                // Swipe right -> next image
+                setImage(index + 1);
             }
             touchStartX = null;
+            isDragging = false;
+        });
+
+        // Mouse drag detection (for desktop/tablet)
+        slider.addEventListener('mousedown', (e) => {
+            mouseStartX = e.clientX;
+            isDragging = true;
+            slider.style.cursor = 'grabbing';
+            e.preventDefault();
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDragging || mouseStartX === null) return;
+            slider.style.cursor = 'grabbing';
+        });
+
+        slider.addEventListener('mouseup', (e) => {
+            if (mouseStartX === null) return;
+            const mouseEndX = e.clientX;
+            const dx = mouseEndX - mouseStartX;
+            const THRESHOLD = 40; // pixels
+
+            if (dx > THRESHOLD) {
+                // Drag right -> next image
+                setImage(index + 1);
+            } else if (dx < -THRESHOLD) {
+                // Drag left -> previous image
+                setImage(index - 1);
+            }
+            mouseStartX = null;
+            isDragging = false;
+            slider.style.cursor = 'grab';
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            mouseStartX = null;
+            isDragging = false;
+            slider.style.cursor = 'grab';
+        });
+
+        // Set initial cursor style
+        slider.addEventListener('mouseenter', () => {
+            slider.style.cursor = 'grab';
         });
 
         // Initialize
