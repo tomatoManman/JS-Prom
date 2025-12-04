@@ -108,28 +108,24 @@ function setupHeroSlideshow() {
 
     // Define image sets for different orientations
     const portraitImages = [
-        'images/portrait/slide1.png',
-        'images/portrait/slide2.png',
-        'images/portrait/slide3.png',
-        'images/portrait/slide4.png',
-        'images/portrait/slide5.png',
-        'images/portrait/slide6.png',
-        'images/portrait/slide7.png',
-        'images/portrait/slide8.png',
-        'images/portrait/slide9.png',
+        'images/portrait/portrait1.jpg',
+        'images/portrait/portrait2.jpeg',
+        'images/portrait/portrait3.png',
+        'images/portrait/portrait4.jpg',
+        'images/portrait/portrait5.jpg',
+        'images/portrait/portrait6.jpg',
+        'images/portrait/portrait7.jpg',
+        'images/portrait/portrait8.jpg',
+        'images/portrait/portrait9.png',
+        'images/portrait/portrait10.png',
     ];
 
     const landscapeImages = [
-        'images/landscape/slide1.jpg',
-        'images/landscape/slide2.jpg',
-        'images/landscape/slide3.jpg',
-        'images/landscape/slide4.png',
-        'images/landscape/slide5.jpg',
-        'images/landscape/slide6.jpg',
-        'images/landscape/slide7.jpg',
-        'images/landscape/slide8.jpg',
-        'images/landscape/slide9.jpg',
-        'images/landscape/slide10.jpg',
+        'images/landscape/landscape1.jpg',
+        'images/landscape/landscape2.jpg',
+        'images/landscape/landscape3.jpg',
+        'images/landscape/landscape4.jpg',
+        'images/landscape/landscape5.jpg',
     ];
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -310,9 +306,13 @@ function setupThemeSlideshow() {
     }
 
     const images = [
-        'images/theme/theme1.jpg',
+        'images/theme/theme1.jpeg',
         'images/theme/theme2.jpg',
-        'images/theme/theme3.jpg'
+        'images/theme/theme3.jpeg',
+        'images/theme/theme4.jpeg',
+        'images/theme/theme5.jpeg',
+        'images/theme/theme6.jpeg',
+        'images/theme/theme7.jpeg',
     ];
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -436,22 +436,30 @@ function setupAttireSliders() {
 
     const imagesFor = {
         boys: [
-            'images/attire/boys1.png',
-            'images/attire/boys2.png',
-            'images/attire/boys3.png',
-            'images/attire/boys4.png',
-            'images/attire/boys5.png',
-            'images/attire/boys6.png',
-            'images/attire/boys7.png',
-            'images/attire/boys8.png',
+            'images/attire/boys1.jpg',
+            'images/attire/boys2.jpg',
+            'images/attire/boys3.jpg',
+            'images/attire/boys4.jpg',
+            'images/attire/boys5.jpg',
+            'images/attire/boys6.jpg',
+            'images/attire/boys8.jpg',
+            'images/attire/boys9.jpg',
+            'images/attire/boys10.png',
+            'images/attire/boys11.png',
+            'images/attire/boys12.png',
+            'images/attire/boys13.png',
+            'images/attire/boys14.png',
+            'images/attire/boys15.png',
         ],
         girls: [
-            'images/attire/girls1.png',
-            'images/attire/girls2.png',
-            'images/attire/girls4.png',
+            'images/attire/girls1.jpg',
+            'images/attire/girls2.jpg',
+            'images/attire/girls4.jpg',
             'images/attire/girls5.jpg',
-            'images/attire/girls6.png',
-            'images/attire/girls7.png',
+            'images/attire/girls6.jpg',
+            'images/attire/girls7.jpg',
+            'images/attire/girls8.jpg',
+            'images/attire/girls9.jpg',
         ]
     };
 
