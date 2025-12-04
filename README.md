@@ -3,10 +3,10 @@
 Really messy code of the 2k27-28 JS Prom
 
 Current Version:
-Event Details - True
-Venue Details - False
-Attire Recommendations - False
-Contact Information - False
-Embedded Maps - False
-Embedded Calendar - False
-Responsiveness - False
+<br> Event Details - True
+<br> Venue Details - False
+<br> Attire Recommendations - False
+<br> Contact Information - False
+<br> Embedded Maps - False
+<br> Embedded Calendar - False
+<br> Responsiveness - False
