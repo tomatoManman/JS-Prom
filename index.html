@@ -9,6 +9,17 @@
     <title>Rêveuse - PSHS-BRC Promenade</title>
 </head>
 <body role="application">
+    <!-- Background Audio Player -->
+    <audio id="background-music" loop>
+        <source src="audio/background-music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Audio Control Button -->
+    <button id="music-toggle" class="music-toggle" aria-label="Toggle background music" title="Toggle music">
+        🔊
+    </button>
+
     <div id="stack">
         <!-- HERO SECTION: Pictures Slideshow -->
         <section id="pictures-slideshow" class="panel" aria-label="Welcome Hero Section">
