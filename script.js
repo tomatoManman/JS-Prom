@@ -3,8 +3,72 @@
  * Handles slideshows, navigation, and interactive elements
  */
 
+/**
+ * Audio Player Setup
+ * Handles background music playback with toggle button
+ * Automatically plays on page load (with volume muted initially for browser autoplay policies)
+ */
+function setupAudioPlayer() {
+    const audio = document.querySelector('#background-music');
+    const musicToggle = document.querySelector('.music-toggle');
+
+    if (!audio || !musicToggle) {
+        console.warn('⚠ Audio player elements not found');
+        return;
+    }
+
+    // Set audio to loop and start volume at 50%
+    audio.loop = true;
+    audio.volume = 0.5;
+
+    // Attempt to auto-play (browsers require user gesture for sound)
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+        playPromise
+            .then(() => {
+                console.log('✓ Background music auto-playing');
+                musicToggle.classList.add('playing');
+            })
+            .catch(error => {
+                console.log('⚠ Auto-play blocked by browser. User must click to play.', error);
+                musicToggle.classList.add('muted');
+            });
+    }
+
+    // Toggle music on button click
+    musicToggle.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+            musicToggle.classList.add('playing');
+            musicToggle.classList.remove('muted');
+            console.log('✓ Music playing');
+        } else {
+            audio.pause();
+            musicToggle.classList.remove('playing');
+            musicToggle.classList.add('muted');
+            console.log('✓ Music paused');
+        }
+    });
+
+    // Update button state when audio ends/plays
+    audio.addEventListener('play', () => {
+        musicToggle.classList.add('playing');
+        musicToggle.classList.remove('muted');
+    });
+
+    audio.addEventListener('pause', () => {
+        musicToggle.classList.remove('playing');
+        musicToggle.classList.add('muted');
+    });
+
+    console.log('✓ Audio player initialized');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('✓ DOM loaded, initializing app...');
+
+    // ========== AUDIO PLAYER SETUP ==========
+    setupAudioPlayer();
 
     // ========== HERO SLIDESHOW ==========
     setupHeroSlideshow();
