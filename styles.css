@@ -400,6 +400,10 @@ article.panel {
     gap: var(--margin-l);
 }
 
+.theme-section > div:last-child h1{
+    line-height: 20px;
+}
+
 @media (min-width: 768px) {
     #event > div,
     .theme-section {
