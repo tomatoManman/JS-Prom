@@ -1,13 +1,3 @@
-/**
- * PSHS-BRC Promenade Website - Fixed JavaScript
- * Handles slideshows, navigation, and interactive elements
- */
-
-/**
- * Audio Player Setup
- * Handles background music playback with toggle button
- * Automatically plays on page load (with volume muted initially for browser autoplay policies)
- */
 function setupAudioPlayer() {
     const audio = document.querySelector('#background-music');
     const musicToggle = document.querySelector('.music-toggle');
@@ -17,11 +7,9 @@ function setupAudioPlayer() {
         return;
     }
 
-    // Set audio to loop and start volume at 50%
     audio.loop = true;
     audio.volume = 0.5;
 
-    // Attempt to auto-play (browsers require user gesture for sound)
     const playPromise = audio.play();
     if (playPromise !== undefined) {
         playPromise
@@ -35,7 +23,6 @@ function setupAudioPlayer() {
             });
     }
 
-    // Toggle music on button click
     musicToggle.addEventListener('click', () => {
         if (audio.paused) {
             audio.play();
@@ -49,8 +36,6 @@ function setupAudioPlayer() {
             console.log('✓ Music paused');
         }
     });
-
-    // Update button state when audio ends/plays
     audio.addEventListener('play', () => {
         musicToggle.classList.add('playing');
         musicToggle.classList.remove('muted');
@@ -67,32 +52,17 @@ function setupAudioPlayer() {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('✓ DOM loaded, initializing app...');
 
-    // ========== AUDIO PLAYER SETUP ==========
     setupAudioPlayer();
-
-    // ========== HERO SLIDESHOW ==========
     setupHeroSlideshow();
-
-    // ========== VILLA CACERES SLIDESHOW ==========
     setupCaceresSlideshow();
-
-    // ========== THEME SLIDESHOW ==========
     setupThemeSlideshow();
-
-    // ========== ATTIRE SLIDERS ==========
     setupAttireSliders();
-
-    // ========== NAVIGATION & PANEL SWITCHING ==========
     setupNavigation();
 
     console.log('✓ All features initialized');
 });
 
-/**
- * Hero/Picture Slideshow
- * Crossfades between background images every 7 seconds
- * Detects device orientation (portrait/landscape) and uses appropriate image set
- */
+
 function setupHeroSlideshow() {
     const slideshowEl = document.querySelector('#pictures-slideshow');
     if (!slideshowEl) {
@@ -133,10 +103,6 @@ function setupHeroSlideshow() {
     let currentImages = portraitImages; // Default to portrait
     let heroInterval = null;
 
-    /**
-     * Determine device orientation
-     * Returns 'portrait' or 'landscape' based on window dimensions
-     */
     const getOrientation = () => {
         if (window.matchMedia('(orientation: portrait)').matches) {
             return 'portrait';
@@ -145,16 +111,10 @@ function setupHeroSlideshow() {
         }
     };
 
-    /**
-     * Get appropriate image set based on current orientation
-     */
     const getImageSet = () => {
         return getOrientation() === 'portrait' ? portraitImages : landscapeImages;
     };
 
-    /**
-     * Initialize slideshow with current orientation images
-     */
     const initializeSlideshow = () => {
         currentImages = getImageSet();
         current = 0;
@@ -167,24 +127,18 @@ function setupHeroSlideshow() {
         console.log(`✓ Hero slideshow initialized in ${orientation} mode with ${currentImages.length} images`);
     };
 
-    /**
-     * Start the slideshow interval
-     */
     const startSlideshow = () => {
         if (prefersReduced) {
             console.log('✓ Reduced motion enabled - slideshow disabled');
             return;
         }
 
-        // Clear existing interval if any to prevent duplicate intervals
         if (heroInterval) {
             clearInterval(heroInterval);
             console.log('► Cleared previous slideshow interval');
         }
 
-        // Change image every 7 seconds
         heroInterval = setInterval(() => {
-            // Safety check: ensure layers still exist
             if (!layers || layers.length < 2) {
                 console.warn('⚠ Slideshow layers lost, clearing interval');
                 clearInterval(heroInterval);
@@ -195,7 +149,6 @@ function setupHeroSlideshow() {
             const visibleLayer = layers.find(l => l.classList.contains('visible'));
             const hiddenLayer = layers.find(l => !l.classList.contains('visible'));
 
-            // Ensure both layers exist before updating
             if (visibleLayer && hiddenLayer) {
                 hiddenLayer.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("${currentImages[next]}")`;
                 hiddenLayer.classList.add('visible');
@@ -204,23 +157,19 @@ function setupHeroSlideshow() {
             }
         }, 7000);
 
-        // Store interval ID for cleanup
         window.heroSlideInterval = heroInterval;
         console.log(`✓ Slideshow interval started (${currentImages.length} images, 7s interval)`);
     };
 
-    // Initialize slideshow
     initializeSlideshow();
     startSlideshow();
 
-    // Listen for orientation changes (handles device rotation)
     window.addEventListener('orientationchange', () => {
         console.log('► Device orientation changed, reinitializing slideshow...');
         initializeSlideshow();
         startSlideshow();
     });
 
-    // Also listen for resize events to catch orientation changes on desktop
     let lastOrientation = getOrientation();
     let resizeTimeout;
     window.addEventListener('resize', () => {
@@ -228,21 +177,16 @@ function setupHeroSlideshow() {
         resizeTimeout = setTimeout(() => {
             const newOrientation = getOrientation();
 
-            // Only reinitialize if orientation actually changed
             if (lastOrientation !== newOrientation) {
                 console.log(`► Orientation changed: ${lastOrientation} → ${newOrientation}, reinitializing slideshow...`);
                 lastOrientation = newOrientation;
                 initializeSlideshow();
                 startSlideshow();
             }
-        }, 250); // Debounce to avoid excessive reinitializations
+        }, 250);
     });
 }
 
-/**
- * Villa Caceres Background Slideshow
- * Crossfades between venue images every 5 seconds
- */
 function setupCaceresSlideshow() {
     const container = document.querySelector('#caceres-slideshow');
     if (!container) {
@@ -268,7 +212,6 @@ function setupCaceresSlideshow() {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let current = 0;
 
-    // Initialize first two layers
     layers[0].style.backgroundImage = `url("${images[0]}")`;
     layers[0].classList.add('visible');
     layers[1].style.backgroundImage = `url("${images[1 % images.length]}")`;
@@ -277,7 +220,6 @@ function setupCaceresSlideshow() {
 
     if (prefersReduced) return;
 
-    // Change image every 5 seconds
     const caceresInterval = setInterval(() => {
         const next = (current + 1) % images.length;
         const visibleLayer = layers.find(l => l.classList.contains('visible'));
@@ -293,11 +235,6 @@ function setupCaceresSlideshow() {
     window.caceresSlideInterval = caceresInterval;
 }
 
-/**
- * Theme Slideshow
- * Auto-cycles through theme inspiration images every 6 seconds with smooth crossfade
- * Uses dual-layer technique for seamless transitions
- */
 function setupThemeSlideshow() {
     const slider = document.querySelector('.theme-slideshow');
     if (!slider) {
@@ -325,7 +262,6 @@ function setupThemeSlideshow() {
     const nextBtn = slider.querySelector('.theme-next');
     const dotsContainer = slider.querySelector('.theme-dots');
 
-    // Create indicator dots
     if (dotsContainer) {
         images.forEach((img, i) => {
             const dot = document.createElement('div');
@@ -346,41 +282,33 @@ function setupThemeSlideshow() {
     const setImage = (newIndex) => {
         newIndex = ((newIndex % images.length) + images.length) % images.length;
         
-        // Prepare next image
         nextImg.src = images[newIndex];
         nextImg.style.opacity = '0';
         
-        // Trigger fade transition
         setTimeout(() => {
             nextImg.style.opacity = '1';
             currentImg.style.opacity = '0';
         }, 10);
         
-        // After transition completes, swap layers
         setTimeout(() => {
             currentImg.src = images[newIndex];
             currentImg.style.opacity = '1';
             nextImg.style.opacity = '0';
             index = newIndex;
             updateDots();
-        }, 1620); // Slightly longer than transition duration
+        }, 1620);
     };
 
-    /**
-     * Start the auto-cycling slideshow
-     */
     const startSlideshow = () => {
         if (prefersReduced) {
             console.log('✓ Reduced motion enabled - theme slideshow auto-play disabled');
             return;
         }
 
-        // Clear existing interval to prevent duplicates
         if (themeInterval) {
             clearInterval(themeInterval);
         }
 
-        // Change image every 6 seconds
         themeInterval = setInterval(() => {
             setImage(index + 1);
         }, 6000);
@@ -389,7 +317,6 @@ function setupThemeSlideshow() {
         console.log(`✓ Theme slideshow interval started (${images.length} images, 6s interval)`);
     };
 
-    // Click handlers (manual navigation)
     if (nextBtn) {
         nextBtn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -403,7 +330,6 @@ function setupThemeSlideshow() {
         });
     }
 
-    // Keyboard navigation
     slider.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') {
             e.preventDefault();
@@ -415,7 +341,6 @@ function setupThemeSlideshow() {
         }
     });
 
-    // Initialize
     currentImg.src = images[0];
     nextImg.src = images[1];
     updateDots();
@@ -423,10 +348,6 @@ function setupThemeSlideshow() {
     console.log('✓ Theme slideshow initialized with', images.length, 'images');
 }
 
-/**
- * Attire Sliders
- * Handles click, keyboard, and swipe navigation for boys/girls attire galleries
- */
 function setupAttireSliders() {
     const sliders = Array.from(document.querySelectorAll('.attire-slider'));
     if (!sliders.length) {
@@ -473,7 +394,6 @@ function setupAttireSliders() {
         const nextBtn = slider.querySelector('.attire-next');
         const dotsContainer = slider.querySelector('.attire-dots');
 
-        // Create indicator dots
         if (dotsContainer) {
             imgs.forEach((img, i) => {
                 const dot = document.createElement('div');
@@ -497,7 +417,6 @@ function setupAttireSliders() {
             updateDots();
         };
 
-        // Click handlers
         if (nextBtn) {
             nextBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -510,8 +429,6 @@ function setupAttireSliders() {
                 setImage(index - 1);
             });
         }
-
-        // Keyboard navigation
         slider.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') {
                 e.preventDefault();
@@ -523,7 +440,6 @@ function setupAttireSliders() {
             }
         });
 
-        // Touch swipe detection
         let touchStartX = null;
         let mouseStartX = null;
         let isDragging = false;
@@ -536,7 +452,6 @@ function setupAttireSliders() {
         }, { passive: true });
 
         slider.addEventListener('touchmove', (e) => {
-            // Can add visual feedback here if needed
         }, { passive: true });
 
         slider.addEventListener('touchend', (e) => {
@@ -547,20 +462,17 @@ function setupAttireSliders() {
             if (touchEndX === null) return;
 
             const dx = touchEndX - touchStartX;
-            const THRESHOLD = 40; // pixels
+            const THRESHOLD = 40;
 
             if (dx > THRESHOLD) {
-                // Swipe left -> previous image
                 setImage(index - 1);
             } else if (dx < -THRESHOLD) {
-                // Swipe right -> next image
                 setImage(index + 1);
             }
             touchStartX = null;
             isDragging = false;
         });
-
-        // Mouse drag detection (for desktop/tablet)
+        
         slider.addEventListener('mousedown', (e) => {
             mouseStartX = e.clientX;
             isDragging = true;
@@ -577,13 +489,11 @@ function setupAttireSliders() {
             if (mouseStartX === null) return;
             const mouseEndX = e.clientX;
             const dx = mouseEndX - mouseStartX;
-            const THRESHOLD = 40; // pixels
+            const THRESHOLD = 40; 
 
             if (dx > THRESHOLD) {
-                // Drag right -> next image
                 setImage(index + 1);
             } else if (dx < -THRESHOLD) {
-                // Drag left -> previous image
                 setImage(index - 1);
             }
             mouseStartX = null;
@@ -597,22 +507,15 @@ function setupAttireSliders() {
             slider.style.cursor = 'grab';
         });
 
-        // Set initial cursor style
         slider.addEventListener('mouseenter', () => {
             slider.style.cursor = 'grab';
         });
 
-        // Initialize
         setImage(0);
     });
 
     console.log('✓ Attire sliders initialized');
 }
-
-/**
- * Navigation & Panel Switching
- * Handles nav button clicks and panel display logic
- */
 function setupNavigation() {
     const navButtons = document.querySelectorAll('#navbar button, .nav-button');
     const panels = document.querySelectorAll('#content .panel, [data-panel]');
@@ -624,9 +527,6 @@ function setupNavigation() {
 
     console.log('✓ Navigation setup: ', navButtons.length, 'buttons,', panels.length, 'panels');
 
-    /**
-     * Show specific panel by ID
-     */
     const showPanel = (id) => {
         panels.forEach(panel => {
             const panelId = panel.id || panel.dataset.panel;
@@ -639,23 +539,19 @@ function setupNavigation() {
         });
     };
 
-    /**
-     * Animate panel children with staggered fade-up
-     */
     const animatePanel = (panel) => {
         if (!panel) return;
 
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
         const elements = [panel, ...panel.querySelectorAll('*')];
-        const duration = 360; // ms
-        const stagger = 60; // ms per element
+        const duration = 360;
+        const stagger = 60;
 
         elements.forEach((el, i) => {
             el.style.animation = `fadeUp ${duration}ms cubic-bezier(.2,.9,.2,1) ${i * stagger}ms both`;
         });
 
-        // Clean up animations after completion
         const totalTime = duration + elements.length * stagger + 50;
         setTimeout(() => {
             elements.forEach(el => {
@@ -664,7 +560,6 @@ function setupNavigation() {
         }, totalTime);
     };
 
-    // Show first panel by default
     if (panels.length) {
         const firstPanelId = panels[0].id || panels[0].dataset.panel;
         showPanel(firstPanelId);
@@ -672,7 +567,6 @@ function setupNavigation() {
         animatePanel(panels[0]);
     }
 
-    // Add click listeners to all nav buttons
     navButtons.forEach(button => {
         button.addEventListener('click', () => {
             const target = button.dataset.target;
@@ -681,10 +575,8 @@ function setupNavigation() {
                 return;
             }
 
-            // Show the target panel
             showPanel(target);
 
-            // Find and animate the shown panel
             const shownPanel = Array.from(panels).find(p => {
                 return (p.id === target || p.dataset.panel === target);
             });
@@ -693,12 +585,10 @@ function setupNavigation() {
                 animatePanel(shownPanel);
             }
 
-            // Update button styles
             navButtons.forEach(b => {
                 b.classList.toggle('selected', b === button);
             });
 
-            // Smooth scroll button into view on mobile
             if (window.innerWidth < 768 && button.scrollIntoView) {
                 button.scrollIntoView({
                     behavior: 'smooth',
