@@ -644,6 +644,108 @@ article.panel {
 }
 
 /* ========== ATTIRE PANEL ========== */
+#attire > h2 {
+    font-size: var(--font-l);
+    margin: var(--margin-l) 0 var(--margin-m) 0;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+#attire > hr {
+    border: none;
+    border-top: 2px solid #ddd;
+    margin: var(--margin-l) 0;
+}
+
+/* Color Palette Section */
+.color-palette-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--margin-l);
+    margin-bottom: var(--margin-xl);
+    padding: var(--margin-l);
+    background-color: #fafafa;
+    border-radius: var(--margin-s);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+@media (min-width: 768px) {
+    .color-palette-section {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--margin-m);
+        padding: var(--margin-xl);
+    }
+}
+
+.color-palette {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--margin-s);
+}
+
+@media (max-width: 768px) {
+    .color-palette-section {
+        grid-template-columns: 1fr;
+        gap: var(--margin-s);
+        padding: var(--margin-m);
+    }
+}
+
+@media (max-width: 480px) {
+    .color-palette {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 0.3rem;
+    }
+    
+    .color-swatch {
+        border-radius: 0.25rem;
+        padding: 2px;
+    }
+    
+    .color-swatch .color-hex {
+        display: none;
+    }
+}
+
+.color-swatch {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: var(--margin-s);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 200ms ease;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: var(--margin-xs);
+    overflow: hidden;
+}
+
+.color-swatch:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.color-swatch .color-hex {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    color: #222;
+    padding: var(--margin-xs) var(--margin-s);
+    border-radius: 0.25rem;
+    font-size: var(--font-xxs);
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 200ms ease;
+    pointer-events: none;
+    text-align: center;
+    backdrop-filter: blur(4px);
+    white-space: nowrap;
+}
+
+.color-swatch:hover .color-hex {
+    opacity: 1;
+}
+
 .attire-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -783,76 +885,49 @@ article.panel {
 
 /* ========== SCHEDULE PANEL ========== */
 .schedule-table {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--margin-m);
+    width: 100%;
+    border-collapse: collapse;
     margin-bottom: var(--margin-xl);
     overflow-x: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: var(--margin-s);
 }
 
-@media (max-width: 480px) {
-    .schedule-table {
-        grid-template-columns: 1fr 1.5fr;
-        gap: 0;
-        font-size: 0.8rem;
-    }
+.schedule-table thead {
+    background-color: var(--nav-background-color);
 }
 
-@media (min-width: 481px) and (max-width: 767px) {
-    .schedule-table {
-        grid-template-columns: auto 1fr;
-    }
-}
-
-@media (min-width: 768px) {
-    .schedule-table {
-        grid-template-columns: auto 1fr;
-    }
-}
-
-.date-column,
-.activity-column {
-    display: grid;
-    grid-template-rows: auto repeat(5, 1fr);
-    gap: 0;
-}
-
-.table-header,
-.table-row {
-    border-bottom: 1px solid #ccc;
+.schedule-table th {
+    padding: var(--margin-s) var(--margin-m);
+    text-align: left;
     font-size: var(--font-s);
-    padding: var(--margin-s);
-    min-height: 3rem;
-    display: flex;
-    align-items: center;
-    font-weight: 400;
+    font-weight: 600;
+    color: var(--nav-clicked-text-color);
+    border-bottom: 2px solid var(--nav-clicked-text-color);
+}
+
+.schedule-table td {
+    padding: var(--margin-s) var(--margin-m);
+    font-size: var(--font-s);
     color: #222;
+    border-bottom: 1px solid #ccc;
+    line-height: 1.6;
+}
+
+.schedule-table tbody tr:hover {
+    background-color: rgba(92, 95, 85, 0.08);
+    transition: background-color 200ms ease;
+}
+
+.schedule-table tbody tr:last-child td {
+    border-bottom: none;
 }
 
 @media (max-width: 480px) {
-    .table-header,
-    .table-row {
+    .schedule-table th,
+    .schedule-table td {
         font-size: 0.75rem;
         padding: 0.5rem;
-        min-height: 2.5rem;
-    }
-}
-
-.table-header {
-    background-color: var(--nav-background-color);
-    color: var(--nav-clicked-text-color);
-    text-align: center;
-    font-weight: 600;
-}
-
-.date-column {
-    border-right: 1px solid #ccc;
-}
-
-@media (max-width: 480px) {
-    .date-column {
-        border-right: none;
-        border-bottom: 1px solid #ccc;
     }
 }
 
